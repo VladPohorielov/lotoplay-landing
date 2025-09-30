@@ -9,15 +9,14 @@ module.exports = {
     headless: true,
     viewport: { width: 1280, height: 720 },
     actionTimeout: 10 * 1000,
-    ignoreHTTPSErrors: true,
+    ignoreHTTPSErrors: true
   },
   projects: [
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] }
     }
-  ]
-  ,
+  ],
   webServer: {
     command: 'npm run serve',
     url: 'http://127.0.0.1:5173',
