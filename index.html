@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Гурт «Грим та Грім» — офіційний сайт</title>
+    <meta
+      name="description"
+      content="Справжній український рок, який гучно б'є в серце. Приєднуйся на найближчих виступах!"
+    />
+    <meta name="theme-color" content="#0f1115" />
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Прискорення: попереднє встановлення з'єднань до CDN та серверів тайлів -->
+    <link rel="preconnect" href="https://unpkg.com" crossorigin />
+    <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin />
+    <!-- Попереднє завантаження критичних ресурсів: фонова картинка та основний скрипт -->
+    <link rel="preload" href="assets/licensed-image.jpg" as="image" />
+    <link rel="preload" href="main.js" as="script" />
+    <!-- Попереднє завантаження Leaflet CSS/JS (crossorigin) для пришвидшення ініціалізації карти -->
+    <link
+      rel="preload"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      as="style"
+      crossorigin
+    />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link
+      rel="preload"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      as="script"
+      crossorigin
+    />
+    <script defer src="main.js"></script>
+    <!-- Для продакшн: замініть посилання на main.min.js та styles.min.css. -->
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Перейти до контенту</a>
+    <header class="header" id="top">
+      <div class="container header__row">
+        <a class="logo" href="#top">G&G</a>
+        <button class="burger" aria-label="Меню" aria-expanded="false" aria-controls="nav">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="nav" id="nav" aria-label="Головне меню">
+          <a href="#about" class="nav__link">Про гурт</a>
+          <a href="#concerts" class="nav__link">Концерти</a>
+          <button class="nav__link nav__btn" data-modal-target="#galleryModal">Галерея</button>
+          <a href="#contacts" class="nav__link">Контакти</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-label="Гурт «Грим та Грім»">
+        <div class="hero__bg"></div>
+        <div class="container hero__content">
+          <h1>Гурт «Грим та Грім»</h1>
+          <p class="lead">Справжній український рок, який гучно б’є в серце.</p>
+          <p>
+            «Грим та Грім» — це поєднання потужних гітарних рифів, чесних текстів і вибухової
+            енергії сцени. Ми граємо для тих, хто чує живий звук, свободу та силу музики.
+          </p>
+          <p class="muted">
+            Наші концерти — це завжди квиток у драйв і емоції. Приєднуйся до нас на найближчих
+            виступах! Кожен клік сяє як неон.
+          </p>
+          <div class="hero__ctas">
+            <button class="btn btn--primary" data-modal-target="#ticketModal">
+              Замовити квиток
+            </button>
+            <a href="#concerts" class="btn btn--ghost">Найближчі концерти</a>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="concerts"
+        class="section section--table section--bg-concerts"
+        aria-labelledby="concertsTitle"
+      >
+        <div class="container">
+          <h2 id="concertsTitle">Найближчі концерти</h2>
+          <div class="table-wrap" role="region" aria-label="Розклад концертів з прокруткою">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Місто / Заклад</th>
+                  <th>К-сть місць</th>
+                  <th>Дата і час</th>
+                  <th><span class="sr-only">Дія</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Київ — Docker-G Pub</td>
+                  <td>250</td>
+                  <td>25.10.2025, 19:00</td>
+                  <td>
+                    <button
+                      class="btn btn--small btn--accent"
+                      data-modal-target="#ticketModal"
+                      data-city="Київ"
+                      data-venue="Docker-G Pub"
+                      data-date="25.10.2025, 19:00"
+                    >
+                      Замовити квиток
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Львів — !FESTRepublic</td>
+                  <td>400</td>
+                  <td>01.11.2025, 20:00</td>
+                  <td>
+                    <button
+                      class="btn btn--small btn--accent"
+                      data-modal-target="#ticketModal"
+                      data-city="Львів"
+                      data-venue="!FESTRepublic"
+                      data-date="01.11.2025, 20:00"
+                    >
+                      Замовити квиток
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Одеса — Зелений театр</td>
+                  <td>700</td>
+                  <td>08.11.2025, 19:30</td>
+                  <td>
+                    <button
+                      class="btn btn--small btn--accent"
+                      data-modal-target="#ticketModal"
+                      data-city="Одеса"
+                      data-venue="Зелений театр"
+                      data-date="08.11.2025, 19:30"
+                    >
+                      Замовити квиток
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Харків — ArtZavod</td>
+                  <td>500</td>
+                  <td>16.11.2025, 19:00</td>
+                  <td>
+                    <button
+                      class="btn btn--small btn--accent"
+                      data-modal-target="#ticketModal"
+                      data-city="Харків"
+                      data-venue="ArtZavod"
+                      data-date="16.11.2025, 19:00"
+                    >
+                      Замовити квиток
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--bg-members" aria-labelledby="membersTitle">
+        <div class="container">
+          <h2 id="membersTitle">Учасники гурту</h2>
+          <div class="cards">
+            <article class="card">
+              <img src="assets/member-guitar.webp" width="600" height="400" alt="Максим — гітара" />
+              <div class="card__body">
+                <h3 class="card__title">Максим — гітара</h3>
+              </div>
+            </article>
+            <article class="card">
+              <img src="assets/member-vocal.webp" width="600" height="400" alt="Олена — вокал" />
+              <div class="card__body">
+                <h3 class="card__title">Олена — вокал</h3>
+              </div>
+            </article>
+            <article class="card">
+              <img src="assets/member-drums.webp" width="600" height="400" alt="Тарас — барабани" />
+              <div class="card__body">
+                <h3 class="card__title">Тарас — барабани</h3>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--about" id="about" aria-labelledby="aboutTitle">
+        <div class="container about__grid">
+          <div class="about__text">
+            <h2 id="aboutTitle">Наша історія</h2>
+            <p>
+              «Грим та Грім» народився з бажання створювати музику, яка відчувається серцем. Ми
+              почали свій шлях із маленьких сцен у центрі Києва, де кожен акорд, кожне слово було
+              сотнею сильних емоцій та переживань. Це було місце, де народжувались наші перші пісні,
+              які ми винесли далі разом із вірними слухачами.
+            </p>
+            <p>
+              За роки нашої діяльності ми зросли як музиканти, але не зрадили суть, яка невпинно
+              кличе до великої сцени. Наша музика — це поєднання традиційного року з сучасними
+              елементами, що робить її унікальною та пізнаваною. Ми не боїмося експериментувати зі
+              звуком, додаючи нові інструменти або нові аранжування.
+            </p>
+            <p>
+              Кожен наш виступ — це не просто концерт, а справжня подія, де ми ділимося своєю
+              енергією з глядачами та створюємо неповторну атмосферу. Ми віримо, що музика має силу
+              об’єднувати людей, створювати спільноти та надихати на зміни.
+            </p>
+            <p>
+              Наша команда складається з досвідчених музикантів, кожен з яких приносить свій
+              унікальний стиль та бачення. Максим створює неймовірні гітарні рифи, Олена заворожує
+              своїм вокалом, а Тарас тримає ритм, який змушує серця битися в унісон з музикою.
+            </p>
+          </div>
+          <div class="about__media">
+            <img
+              src="assets/licensed-image.jpg"
+              alt="Концерт гурту на великій сцені"
+              loading="lazy"
+              width="960"
+              height="540"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="section section--contacts section--bg-contacts"
+        id="contacts"
+        aria-labelledby="contactsTitle"
+      >
+        <div class="container">
+          <h2 id="contactsTitle">Зв’яжись з нами</h2>
+          <p class="contacts__lead">Хочеш замовити виступ або маєш питання? Пиши!</p>
+          <div class="contacts__grid">
+            <form id="contactForm" class="form" data-action="https://httpbin.org/post" novalidate>
+              <div class="form__row">
+                <label for="name">Ім’я</label
+                ><input
+                  id="name"
+                  name="name"
+                  required
+                  minlength="2"
+                  placeholder="Твоє ім’я"
+                /><small class="err" data-for="name"></small>
+              </div>
+              <div class="form__row">
+                <label for="email">Email</label
+                ><input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  placeholder="you@example.com"
+                /><small class="err" data-for="email"></small>
+              </div>
+              <div class="form__row form__row--full">
+                <label for="message">Повідомлення</label
+                ><textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  required
+                  minlength="10"
+                  maxlength="1000"
+                  placeholder="Розкажи про свої ідеї…"
+                ></textarea
+                ><small class="err" data-for="message"></small>
+              </div>
+              <div class="form__row form__row--inline">
+                <label class="checkbox"
+                  ><input type="checkbox" id="agree" required /><span
+                    >Погоджуюсь з обробкою даних</span
+                  ></label
+                >
+              </div>
+              <div class="form__actions">
+                <button type="submit" class="btn btn--primary">Відправити</button>
+              </div>
+              <output id="formStatus" class="status" role="status" aria-live="polite"></output>
+            </form>
+
+            <div class="contacts__map" aria-hidden="false">
+              <!-- Leaflet map container (interactive) -->
+              <div
+                id="leafletMap"
+                role="region"
+                aria-label="Карта розташування"
+                style="height: 320px"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__row">
+        <p>© 2025 «Грим та Грім».</p>
+        <p><a href="mailto:booking@lotoplay.test">booking@lotoplay.test</a></p>
+      </div>
+    </footer>
+
+    <dialog class="modal" id="ticketModal">
+      <div class="modal__box" role="dialog" aria-modal="true" aria-labelledby="ticketTitle">
+        <header class="modal__head">
+          <h3 id="ticketTitle">Замовлення квитка</h3>
+          <button class="modal__close" value="close" data-close-modal>&times;</button>
+        </header>
+        <div class="modal__body">
+          <form
+            id="ticketForm"
+            class="ticket-form"
+            data-action="https://httpbin.org/post"
+            novalidate
+          >
+            <div class="ticket-grid">
+              <label class="form__label"
+                ><span>Місто</span><input id="ticketCity" name="city" required
+              /></label>
+              <label class="form__label"
+                ><span>Заклад</span><input id="ticketVenue" name="venue" required
+              /></label>
+              <label class="form__label"
+                ><span>Дата і час</span><input id="ticketDate" name="date" required
+              /></label>
+              <label class="form__label"
+                ><span>Ім'я</span
+                ><input id="ticketName" name="name" required minlength="2" placeholder="Твоє ім'я"
+              /></label>
+              <label class="form__label"
+                ><span>Email</span
+                ><input
+                  id="ticketEmail"
+                  name="email"
+                  type="email"
+                  required
+                  placeholder="you@example.com"
+              /></label>
+              <div class="form__label qty-group">
+                <span>К-сть квитків</span>
+                <div class="qty-controls">
+                  <button type="button" class="qty-btn" data-action="decrease">−</button>
+                  <input id="ticketQty" name="qty" type="number" min="1" max="10" value="1" />
+                  <button type="button" class="qty-btn" data-action="increase">+</button>
+                </div>
+              </div>
+            </div>
+            <div class="form__errors">
+              <small class="err" data-for="ticketForm"></small>
+            </div>
+            <div class="ticket-actions">
+              <button type="button" class="btn btn--ghost" data-close-modal>Скасувати</button>
+              <button type="submit" class="btn btn--accent" id="ticketSubmit">Підтвердити</button>
+            </div>
+          </form>
+
+          <div class="ticket-success" hidden>
+            <h4>Дякуємо! Ваше замовлення отримано.</h4>
+            <p>Ми надішлемо підтвердження на вказаний email.</p>
+            <div class="ticket-success-actions">
+              <button class="btn btn--ghost" data-close-modal>Закрити</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="modal" id="galleryModal">
+      <div class="modal__box modal__box--wide">
+        <header class="modal__head">
+          <h3>Галерея</h3>
+          <button class="modal__close" value="close" data-close-modal>&times;</button>
+        </header>
+        <div class="modal__body">
+          <div class="carousel">
+            <button class="carousel__btn prev">&larr;</button>
+            <div class="carousel__track">
+              <picture class="carousel__slide"
+                ><img src="assets/hero.jpg" alt="Живий концерт — слайд 1" loading="lazy" /></picture
+              ><picture class="carousel__slide"
+                ><img
+                  src="assets/placeholder.svg"
+                  alt="Бекстейдж — слайд 2"
+                  loading="lazy" /></picture
+              ><picture class="carousel__slide"
+                ><img src="assets/placeholder.svg" alt="Публіка — слайд 3" loading="lazy"
+              /></picture>
+            </div>
+            <button class="carousel__btn next">&rarr;</button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  </body>
+</html>

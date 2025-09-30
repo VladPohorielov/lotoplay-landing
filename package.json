@@ -1,0 +1,28 @@
+{
+  "name": "lotoplay-landing",
+  "version": "1.0.0",
+  "description": "Landing page for the band — local build scripts for performance",
+  "scripts": {
+    "serve": "http-server -p 5173 -c-1 .",
+    "build:js": "npx terser main.js -c -m -o main.min.js",
+    "build:css": "npx csso styles.css --output styles.min.css",
+    "convert-images": "node scripts/convert-images.js",
+    "build": "npm run build:js && npm run build:css && npm run convert-images",
+    "lint:html": "htmlhint index.html",
+    "lint:css": "stylelint \"**/*.css\"",
+    "lint:js": "eslint . --ext .js",
+    "lint": "npm run lint:html && npm run lint:css && npm run lint:js"
+  },
+  "devDependencies": {
+    "csso": "^5.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "htmlhint": "^0.15.0",
+    "http-server": "^14.0.0",
+    "sharp": "^0.32.0",
+    "stylelint": "^14.0.0",
+    "stylelint-config-standard": "^27.0.0",
+    "terser": "^5.20.0"
+  }
+}
