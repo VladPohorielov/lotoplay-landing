@@ -9,24 +9,28 @@
       content="Справжній український рок, який гучно б'є в серце. Приєднуйся на найближчих виступах!"
     />
     <meta name="theme-color" content="#0f1115" />
-  <link rel="stylesheet" href="styles.min.css" />
+    <link rel="stylesheet" href="styles.css" />
     <!-- Прискорення: попереднє встановлення з'єднань до CDN та серверів тайлів -->
     <link rel="preconnect" href="https://unpkg.com" crossorigin />
     <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin />
     <!-- Попереднє завантаження критичних ресурсів: фонова картинка та основний скрипт -->
     <link rel="preload" href="assets/licensed-image.jpg" as="image" />
-  <link rel="preload" href="main.min.js" as="script" />
+
     <!-- Попереднє завантаження Leaflet CSS/JS (crossorigin) для пришвидшення ініціалізації карти -->
     <link
       rel="preload"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       as="style"
-      crossorigin
+      crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      crossorigin="anonymous"
+    />
     <!-- Leaflet JS will be lazy-loaded by the app when the map enters the viewport -->
-    <script defer src="main.min.js"></script>
-    <!-- Для продакшн: замініть посилання на main.min.js та styles.min.css. -->
+    <script defer src="main.js"></script>
+    <!-- Використовуються вихідні файли styles.css і main.js у гілці main. -->
   </head>
   <body>
     <a class="skip-link" href="#main">Перейти до контенту</a>
@@ -230,7 +234,8 @@
           <h2 id="contactsTitle">Зв’яжись з нами</h2>
           <p class="contacts__lead">Хочеш замовити виступ або маєш питання? Пиши!</p>
           <div class="contacts__grid">
-            <form id="contactForm" class="form" data-action="https://httpbin.org/post" novalidate>
+            <!-- контактна форма: використовуємо GET-навігацію -->
+            <form id="contactForm" class="form" action="https://httpbin.org/get" method="get">
               <div class="form__row">
                 <label for="name">Ім’я</label
                 ><input
@@ -305,12 +310,7 @@
           <button class="modal__close" value="close" data-close-modal>&times;</button>
         </header>
         <div class="modal__body">
-          <form
-            id="ticketForm"
-            class="ticket-form"
-            data-action="https://httpbin.org/post"
-            novalidate
-          >
+          <form id="ticketForm" class="ticket-form" action="https://httpbin.org/get" method="get">
             <div class="ticket-grid">
               <label class="form__label"
                 ><span>Місто</span><input id="ticketCity" name="city" required

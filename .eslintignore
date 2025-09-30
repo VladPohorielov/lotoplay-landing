@@ -1,0 +1,7 @@
+node_modules/
+*.min.js
+*.min.css
+test-results/
+tests/
+scripts/
+.vscode/
