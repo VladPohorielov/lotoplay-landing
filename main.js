@@ -352,8 +352,51 @@ function initMap () {
   })
 }
 
-// Try to init map after DOM + Leaflet loaded
-if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', () => { setTimeout(initMap, 150) }) } else { setTimeout(initMap, 150) }
+// --- Lazy-load Leaflet when the map element becomes visible ---
+function loadLeafletAssets () {
+  return new Promise((resolve, reject) => {
+    if (typeof L !== 'undefined') return resolve()
+    // load CSS
+    const cssHref = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'
+    if (!document.querySelector(`link[href="${cssHref}"]`)) {
+      const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = cssHref; l.crossOrigin = ''
+      document.head.appendChild(l)
+    }
+    // load script
+    const scriptHref = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
+    if (document.querySelector(`script[src="${scriptHref}"]`)) {
+      // already present
+      const check = setInterval(() => { if (typeof L !== 'undefined') { clearInterval(check); resolve() } }, 50)
+      setTimeout(() => { if (typeof L === 'undefined') reject(new Error('Leaflet load timeout')) }, 8000)
+      return
+    }
+    const s = document.createElement('script'); s.src = scriptHref; s.async = true; s.defer = true; s.crossOrigin = ''
+    s.onload = () => { resolve() }
+    s.onerror = () => { reject(new Error('Leaflet failed to load')) }
+    document.head.appendChild(s)
+  })
+}
+
+function observeAndInitMap () {
+  const mapEl = document.getElementById('leafletMap')
+  if (!mapEl) return
+  // If already loaded and ready, init immediately
+  if (typeof L !== 'undefined') { setTimeout(initMap, 150); return }
+  // IntersectionObserver to lazy-load when the map scrolls into view
+  const io = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        observer.disconnect()
+        loadLeafletAssets().then(() => { setTimeout(initMap, 120) }).catch(() => { /* ignore */ })
+      }
+    })
+  }, { rootMargin: '300px' })
+  io.observe(mapEl)
+  // fallback: if user never scrolls, attempt to load after 5s
+  setTimeout(() => { if (typeof L === 'undefined') { loadLeafletAssets().then(() => setTimeout(initMap, 120)).catch(() => {}) } }, 5000)
+}
+
+if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', observeAndInitMap) } else { observeAndInitMap() }
 
 /* Render mobile-friendly concert cards from the table for small screens */
 function renderMobileConcerts () {

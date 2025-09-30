@@ -9,13 +9,13 @@
       content="Справжній український рок, який гучно б'є в серце. Приєднуйся на найближчих виступах!"
     />
     <meta name="theme-color" content="#0f1115" />
-    <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.min.css" />
     <!-- Прискорення: попереднє встановлення з'єднань до CDN та серверів тайлів -->
     <link rel="preconnect" href="https://unpkg.com" crossorigin />
     <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin />
     <!-- Попереднє завантаження критичних ресурсів: фонова картинка та основний скрипт -->
     <link rel="preload" href="assets/licensed-image.jpg" as="image" />
-    <link rel="preload" href="main.js" as="script" />
+  <link rel="preload" href="main.min.js" as="script" />
     <!-- Попереднє завантаження Leaflet CSS/JS (crossorigin) для пришвидшення ініціалізації карти -->
     <link
       rel="preload"
@@ -24,13 +24,8 @@
       crossorigin
     />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link
-      rel="preload"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-      as="script"
-      crossorigin
-    />
-    <script defer src="main.js"></script>
+    <!-- Leaflet JS will be lazy-loaded by the app when the map enters the viewport -->
+    <script defer src="main.min.js"></script>
     <!-- Для продакшн: замініть посилання на main.min.js та styles.min.css. -->
   </head>
   <body>
